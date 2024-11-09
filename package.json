@@ -1,9 +1,9 @@
 {
-  "name": "my-monorepo",
+  "name": "bumblebee",
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
     "build": "turbo run build",
@@ -16,13 +16,17 @@
     "api": "turbo run dev --filter=api..."
   },
   "devDependencies": {
-    "@types/node": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "eslint": "^8.0.0",
-    "eslint-config-prettier": "^9.0.0",
-    "prettier": "^3.0.0",
-    "turbo": "^1.10.0",
-    "typescript": "^5.0.0"
-  }
+    "@types/node": "^22.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.3",
+    "turbo": "^2.2.3",
+    "typescript": "^5.6.3"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

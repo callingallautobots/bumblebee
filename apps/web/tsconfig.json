@@ -12,7 +12,6 @@
         "./src/*"
       ]
     },
-    "allowJs": true,
     "noEmit": true,
     "incremental": true,
     "resolveJsonModule": true,
