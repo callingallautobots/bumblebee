@@ -4,6 +4,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify'
 import { AppModule } from './app.module'
+import { LoggerService } from './logger/logger.service'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -11,6 +12,7 @@ async function bootstrap() {
     new FastifyAdapter(),
     {
       cors: true,
+      logger: new LoggerService(),
     }
   )
 

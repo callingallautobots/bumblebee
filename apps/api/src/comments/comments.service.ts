@@ -53,15 +53,25 @@ export class CommentsService {
     })
   }
 
+  /**
+   * Removes a comment from the database
+   * @param id - The ID of the comment to be deleted
+   * @param userId - The ID of the user attempting to delete the comment
+   * @returns The deleted comment
+   * @throws NotFoundException if the comment is not found or user is not authorized
+   */
   async remove(id: number, userId: number) {
+    // Find the comment by ID
     const comment = await this.prisma.comment.findUnique({
       where: { id },
     })
 
+    // Check if comment exists and if the user has permission to delete it
     if (!comment || comment.userId !== userId) {
       throw new NotFoundException('Comment not found or unauthorized')
     }
 
+    // Delete and return the comment
     return this.prisma.comment.delete({
       where: { id },
     })

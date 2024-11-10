@@ -10,8 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": ["./packages/*"],
-      "@bumblebee/*": ["packages/*"]
+      "@bumblebee/*": ["./packages/*"]
     }
   },
   "exclude": ["node_modules"]

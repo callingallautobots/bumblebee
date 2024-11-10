@@ -9,9 +9,13 @@ import { TagsModule } from './tags/tags.module'
 import { RolesGuard } from './auth/guards/roles.guard'
 import { APP_GUARD } from '@nestjs/core'
 import { CommentsModule } from './comments/comments.module'
+import { HealthModule } from './health/health.module'
+import { LoggerModule } from './logger/logger.module'
+// import { CacheModule } from './cache/cache.module'
 
 @Module({
   imports: [
+    LoggerModule,
     AuthModule,
     ProjectsModule,
     TranslationsModule,
@@ -19,6 +23,7 @@ import { CommentsModule } from './comments/comments.module'
     TranslationKeysModule,
     TagsModule,
     CommentsModule,
+    HealthModule,
   ],
   providers: [
     PrismaService,
