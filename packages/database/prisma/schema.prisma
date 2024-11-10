@@ -7,12 +7,126 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 示例模型
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  name          String?
+  role          UserRole       @default(TRANSLATOR)
+  projects      ProjectUser[]
+  translations  Translation[]  // 用户创建的翻译
+  comments      Comment[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  PROJECT_MANAGER
+  TRANSLATOR
+  REVIEWER
+}
+
+model Project {
+  id            Int            @id @default(autoincrement())
+  name          String
+  description   String?
+  sourceLocale  String         // 源语言，如 'en'
+  targetLocales String[]       // 目标语言列表
+  members       ProjectUser[]
+  namespaces    Namespace[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model ProjectUser {
+  id        Int         @id @default(autoincrement())
+  project   Project     @relation(fields: [projectId], references: [id])
+  projectId Int
+  user      User        @relation(fields: [userId], references: [id])
+  userId    Int
+  role      ProjectRole @default(TRANSLATOR)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@unique([projectId, userId])
+}
+
+enum ProjectRole {
+  OWNER
+  MANAGER
+  TRANSLATOR
+  REVIEWER
+  MEMBER
+}
+
+model Namespace {
+  id          Int           @id @default(autoincrement())
+  name        String        // 如 'common', 'auth' 等
+  project     Project       @relation(fields: [projectId], references: [id])
+  projectId   Int
+  keys        TranslationKey[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@unique([projectId, name])
+}
+
+model TranslationKey {
+  id          Int           @id @default(autoincrement())
+  key         String        // 翻译键名，如 'welcome.message'
+  description String?       // 上下文说明
+  namespace   Namespace     @relation(fields: [namespaceId], references: [id])
+  namespaceId Int
+  translations Translation[]
+  tags        Tag[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@unique([namespaceId, key])
+}
+
+model Translation {
+  id              Int            @id @default(autoincrement())
+  content         String         // 翻译内容
+  locale          String         // 语言代码，如 'zh-CN'
+  status          TranslationStatus @default(DRAFT)
+  key             TranslationKey @relation(fields: [translationKeyId], references: [id])
+  translationKeyId Int
+  creator         User          @relation(fields: [creatorId], references: [id])
+  creatorId       Int
+  comments        Comment[]
+  version         Int           @default(1)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@unique([translationKeyId, locale])
+}
+
+enum TranslationStatus {
+  DRAFT
+  REVIEW
+  APPROVED
+  REJECTED
+}
+
+model Comment {
+  id            Int         @id @default(autoincrement())
+  content       String
+  translation   Translation @relation(fields: [translationId], references: [id])
+  translationId Int
+  user          User        @relation(fields: [userId], references: [id])
+  userId        Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Tag {
+  id        Int              @id @default(autoincrement())
+  name      String
+  keys      TranslationKey[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@unique([name])
 } 
