@@ -6,4 +6,4 @@ dist
 .env.*
 !.env.example
 .DS_Store
-.logs
+apps/api/logs
