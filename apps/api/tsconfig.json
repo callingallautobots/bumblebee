@@ -1,20 +1,18 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "removeComments": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2022",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "rootDir": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"],
+      "@bumblebee/*": ["../../packages/*/src"]
     }
-  }
+  },
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../../packages/types" },
+    { "path": "../../packages/database" }
+  ]
 }
