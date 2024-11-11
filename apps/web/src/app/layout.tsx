@@ -14,3 +14,8 @@ export default function RootLayout({
     </html>
   )
 }
+
+export const metadata = {
+  title: 'BumbleBee - Translation Management System',
+  description: 'Efficient translation project management platform',
+}

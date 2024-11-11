@@ -9,6 +9,11 @@ interface AuthState {
   isLoading: boolean
   error: string | null
   login: (email: string, password: string) => Promise<void>
+  register: (data: {
+    email: string
+    password: string
+    name: string
+  }) => Promise<void>
   logout: () => void
 }
 
@@ -26,7 +31,21 @@ export const useAuthStore = create<AuthState>()(
           const { data } = await api.post('/auth/login', { email, password })
           set({ user: data.user, token: data.access_token, isLoading: false })
         } catch (error) {
-          set({ error: '登录失败', isLoading: false })
+          set({ error: 'Login failed', isLoading: false })
+        }
+      },
+
+      register: async (data) => {
+        set({ isLoading: true, error: null })
+        try {
+          const response = await api.post('/auth/register', data)
+          set({
+            user: response.data.user,
+            token: response.data.access_token,
+            isLoading: false,
+          })
+        } catch (error) {
+          set({ error: 'Registration failed', isLoading: false })
         }
       },
 

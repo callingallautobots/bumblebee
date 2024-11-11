@@ -23,7 +23,7 @@ export default function UsersPage() {
 
   useEffect(() => {
     if (!user) {
-      // router.push('/login')
+      router.push('/login')
     }
   }, [user, router])
 

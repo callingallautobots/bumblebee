@@ -10,7 +10,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <header className="border-b">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-xl font-bold">
-            翻译管理系统
+            BumbleBee
           </Link>
 
           <nav className="flex items-center gap-6">
