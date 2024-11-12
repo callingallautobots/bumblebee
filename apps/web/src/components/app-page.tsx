@@ -1,18 +1,18 @@
 'use client'
 
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
-export default function BlockPage() {
+export function BlockPage() {
   return (
     <div className="flex h-screen">
       {/* 左侧产品介绍 */}
@@ -37,7 +37,9 @@ export default function BlockPage() {
         <Card className="w-full max-w-sm">
           <CardHeader>
             <CardTitle className="text-2xl">登录</CardTitle>
-            <CardDescription>输入您的邮箱和密码以登录您的账户</CardDescription>
+            <CardDescription>
+              输入您的邮箱和密码以登录您的账户
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
@@ -65,9 +67,12 @@ export default function BlockPage() {
               <Button type="submit" className="w-full">
                 登录
               </Button>
+              <Button variant="outline" className="w-full">
+                使用Google账号登录
+              </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              还没有账户？{' '}
+              还没有账户？{" "}
               <Link href="#" className="underline">
                 注册
               </Link>
