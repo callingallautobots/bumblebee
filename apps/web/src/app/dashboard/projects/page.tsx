@@ -1,13 +1,28 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { Plus, Trash2, Users, Globe, MoreHorizontal, ChevronDown, Search } from "lucide-react"
+import * as React from 'react'
+import {
+  Plus,
+  Trash2,
+  Users,
+  Globe,
+  MoreHorizontal,
+  ChevronDown,
+  Search,
+} from 'lucide-react'
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Progress } from "@/components/ui/progress"
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Progress } from '@/components/ui/progress'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +30,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu'
 import {
   Dialog,
   DialogContent,
@@ -24,46 +39,47 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
+} from '@/components/ui/dialog'
+import { Label } from '@/components/ui/label'
+import Link from 'next/link'
 
 // Mock data for demonstration
 const mockProjects = [
   {
     id: 1,
-    name: "网站本地化",
-    description: "将公司网站翻译成多种语言",
+    name: '网站本地化',
+    description: '将公司网站翻译成多种语言',
     members: [
-      { name: "张三", avatar: "/avatars/01.png" },
-      { name: "李四", avatar: "/avatars/02.png" },
-      { name: "王五", avatar: "/avatars/03.png" },
+      { name: '张三', avatar: '/avatars/01.png' },
+      { name: '李四', avatar: '/avatars/02.png' },
+      { name: '王五', avatar: '/avatars/03.png' },
     ],
     languages: [
-      { code: "en", name: "英语", progress: 80 },
-      { code: "es", name: "西班牙语", progress: 60 },
-      { code: "fr", name: "法语", progress: 40 },
+      { code: 'en', name: '英语', progress: 80 },
+      { code: 'es', name: '西班牙语', progress: 60 },
+      { code: 'fr', name: '法语', progress: 40 },
     ],
   },
   {
     id: 2,
-    name: "移动应用翻译",
-    description: "翻译 iOS 和 Android 应用界面",
+    name: '移动应用翻译',
+    description: '翻译 iOS 和 Android 应用界面',
     members: [
-      { name: "赵六", avatar: "/avatars/04.png" },
-      { name: "钱七", avatar: "/avatars/05.png" },
+      { name: '赵六', avatar: '/avatars/04.png' },
+      { name: '钱七', avatar: '/avatars/05.png' },
     ],
     languages: [
-      { code: "ja", name: "日语", progress: 70 },
-      { code: "ko", name: "韩语", progress: 50 },
+      { code: 'ja', name: '日语', progress: 70 },
+      { code: 'ko', name: '韩语', progress: 50 },
     ],
   },
 ]
 
 export default function ProjectsPage() {
   const [projects, setProjects] = React.useState(mockProjects)
-  const [newProjectName, setNewProjectName] = React.useState("")
-  const [newProjectDescription, setNewProjectDescription] = React.useState("")
-  const [searchQuery, setSearchQuery] = React.useState("")
+  const [newProjectName, setNewProjectName] = React.useState('')
+  const [newProjectDescription, setNewProjectDescription] = React.useState('')
+  const [searchQuery, setSearchQuery] = React.useState('')
 
   const handleCreateProject = () => {
     if (newProjectName && newProjectDescription) {
@@ -75,18 +91,19 @@ export default function ProjectsPage() {
         languages: [],
       }
       setProjects([...projects, newProject])
-      setNewProjectName("")
-      setNewProjectDescription("")
+      setNewProjectName('')
+      setNewProjectDescription('')
     }
   }
 
   const handleDeleteProject = (id: number) => {
-    setProjects(projects.filter(project => project.id !== id))
+    setProjects(projects.filter((project) => project.id !== id))
   }
 
-  const filteredProjects = projects.filter(project =>
-    project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    project.description.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredProjects = projects.filter(
+    (project) =>
+      project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   return (
@@ -142,7 +159,9 @@ export default function ProjectsPage() {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" onClick={handleCreateProject}>创建项目</Button>
+                <Button type="submit" onClick={handleCreateProject}>
+                  创建项目
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -153,32 +172,47 @@ export default function ProjectsPage() {
           <Card key={project.id} className="flex flex-col justify-between">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg">{project.name}</CardTitle>
-              <CardDescription className="text-sm line-clamp-2">{project.description}</CardDescription>
+              <CardDescription className="text-sm line-clamp-2">
+                {project.description}
+              </CardDescription>
             </CardHeader>
             <CardContent className="pb-2">
               <div className="flex items-center space-x-2 mb-2">
                 <Users className="h-4 w-4" />
                 <div className="flex -space-x-2">
                   {project.members.slice(0, 3).map((member, index) => (
-                    <Avatar key={index} className="h-6 w-6 border-2 border-background">
+                    <Avatar
+                      key={index}
+                      className="h-6 w-6 border-2 border-background"
+                    >
                       <AvatarImage src={member.avatar} alt={member.name} />
                       <AvatarFallback>{member.name.slice(0, 2)}</AvatarFallback>
                     </Avatar>
                   ))}
                   {project.members.length > 3 && (
                     <Avatar className="h-6 w-6 border-2 border-background">
-                      <AvatarFallback>+{project.members.length - 3}</AvatarFallback>
+                      <AvatarFallback>
+                        +{project.members.length - 3}
+                      </AvatarFallback>
                     </Avatar>
                   )}
                 </div>
               </div>
               <div className="space-y-1">
                 {project.languages.slice(0, 2).map((language) => (
-                  <div key={language.code} className="flex items-center justify-between text-xs">
+                  <div
+                    key={language.code}
+                    className="flex items-center justify-between text-xs"
+                  >
                     <span>{language.name}</span>
                     <div className="flex items-center space-x-2">
-                      <Progress value={language.progress} className="w-16 h-2" />
-                      <span className="text-muted-foreground">{language.progress}%</span>
+                      <Progress
+                        value={language.progress}
+                        className="w-16 h-2"
+                      />
+                      <span className="text-muted-foreground">
+                        {language.progress}%
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -197,12 +231,19 @@ export default function ProjectsPage() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-[200px]">
-                  <DropdownMenuItem>查看详情</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href={`/dashboard/projects/${project.id}`}>
+                      查看详情
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>编辑项目</DropdownMenuItem>
                   <DropdownMenuItem>管理成员</DropdownMenuItem>
                   <DropdownMenuItem>添加语言</DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => handleDeleteProject(project.id)} className="text-red-600">
+                  <DropdownMenuItem
+                    onClick={() => handleDeleteProject(project.id)}
+                    className="text-red-600"
+                  >
                     删除项目
                   </DropdownMenuItem>
                 </DropdownMenuContent>
