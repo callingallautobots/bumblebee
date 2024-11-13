@@ -35,6 +35,7 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
+  SidebarInset,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -45,46 +46,57 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from '@/components/ui/sidebar'
+import Link from 'next/link'
+import { Separator } from '@/components/ui/separator'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
+import { useState } from 'react'
 
 const navItems = [
   {
-    title: '项目管理',
+    title: '项目',
     icon: Folders,
-    items: [
-      { title: '所有项目', url: '/projects' },
-      { title: '创建新项目', url: '/projects/new' },
-    ],
+    url: '/dashboard/projects',
+    label: 'projects',
   },
   {
-    title: '成员管理',
+    title: '成员',
     icon: Users,
-    items: [
-      { title: '团队成员', url: '/members' },
-      { title: '邀请成员', url: '/members/invite' },
-    ],
+    url: '/dashboard/users',
+    label: 'users',
   },
   {
-    title: '翻译编辑器',
+    title: '编辑器',
     icon: Globe,
-    url: '/editor',
+    url: '/dashboard/editor',
+    label: 'editor',
   },
   {
-    title: '翻译统计',
-    icon: BarChart,
-    url: '/statistics',
-  },
-  {
-    title: '翻译管理',
+    title: '翻译',
     icon: FileText,
-    items: [
-      { title: '待翻译', url: '/translations/pending' },
-      { title: '审核中', url: '/translations/review' },
-      { title: '已完成', url: '/translations/completed' },
-    ],
+    url: '/dashboard/translations',
+    label: 'translations',
+  },
+  {
+    title: '统计',
+    icon: BarChart,
+    url: '/dashboard/statistics',
+    label: 'statistics',
   },
 ]
 
-export default function Dashboard() {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const [activeMenu, setActiveMenu] = useState<string | null>('projects')
   const [user, setUser] = React.useState({
     name: '张三',
     email: 'zhangsan@example.com',
@@ -94,52 +106,7 @@ export default function Dashboard() {
   return (
     <SidebarProvider>
       <Sidebar collapsible="icon">
-        <SidebarHeader>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton
-                    size="lg"
-                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                  >
-                    <BookOpen className="h-5 w-5" />
-                    <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">
-                        翻译管理系统
-                      </span>
-                      <span className="truncate text-xs">选择项目</span>
-                    </div>
-                    <ChevronsUpDown className="ml-auto h-4 w-4" />
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                  align="start"
-                  side="bottom"
-                  sideOffset={4}
-                >
-                  <DropdownMenuLabel className="text-xs text-muted-foreground">
-                    当前项目
-                  </DropdownMenuLabel>
-                  <DropdownMenuItem>网站本地化</DropdownMenuItem>
-                  <DropdownMenuItem>移动应用翻译</DropdownMenuItem>
-                  <DropdownMenuItem>文档国际化</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start px-2"
-                    >
-                      <Globe className="mr-2 h-4 w-4" />
-                      创建新项目
-                    </Button>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarHeader>
+        <SidebarHeader>Bumblebee</SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
             {navItems.map((item) => (
@@ -164,9 +131,9 @@ export default function Dashboard() {
                           {item.items.map((subItem) => (
                             <SidebarMenuSubItem key={subItem.title}>
                               <SidebarMenuSubButton asChild>
-                                <a href={subItem.url}>
+                                <Link href={subItem.url}>
                                   <span>{subItem.title}</span>
-                                </a>
+                                </Link>
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                           ))}
@@ -174,11 +141,18 @@ export default function Dashboard() {
                       </CollapsibleContent>
                     </>
                   ) : (
-                    <SidebarMenuButton asChild tooltip={item.title}>
-                      <a href={item.url}>
+                    <SidebarMenuButton
+                      asChild
+                      tooltip={item.title}
+                      onClick={() => {
+                        setActiveMenu(item.label)
+                      }}
+                      isActive={item.label === activeMenu}
+                    >
+                      <Link href={item.url}>
                         <item.icon className="h-5 w-5" />
                         <span>{item.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   )}
                 </SidebarMenuItem>
@@ -251,6 +225,9 @@ export default function Dashboard() {
         </SidebarFooter>
         <SidebarRail />
       </Sidebar>
+      <SidebarInset>
+        <section className="p-4">{children}</section>
+      </SidebarInset>
     </SidebarProvider>
   )
 }

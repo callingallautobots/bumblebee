@@ -28,7 +28,7 @@ const mockComments = [
   { id: 2, author: "审阅者 2", text: "这个翻译可能需要更多上下文" },
 ]
 
-export function BlockPage() {
+export default function EditorPage() {
   const [selectedKey, setSelectedKey] = React.useState(mockKeys[0])
   const [searchQuery, setSearchQuery] = React.useState("")
   const [translation, setTranslation] = React.useState("")
