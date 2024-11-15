@@ -3,5 +3,8 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "[ignore]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
 }
