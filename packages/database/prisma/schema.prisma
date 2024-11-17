@@ -101,6 +101,7 @@ model Translation {
   updatedAt       DateTime      @updatedAt
 
   @@unique([translationKeyId, locale])
+  @@index([content]) // 添加内容索引用于相似度搜索
 }
 
 enum TranslationStatus {

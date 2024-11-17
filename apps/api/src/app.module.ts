@@ -11,6 +11,7 @@ import { APP_GUARD } from '@nestjs/core'
 import { CommentsModule } from './comments/comments.module'
 import { HealthModule } from './health/health.module'
 import { LoggerModule } from './logger/logger.module'
+import { TranslationMemoryModule } from './translation-memory/translation-memory.module'
 // import { CacheModule } from './cache/cache.module'
 
 @Module({
@@ -24,6 +25,7 @@ import { LoggerModule } from './logger/logger.module'
     TagsModule,
     CommentsModule,
     HealthModule,
+    TranslationMemoryModule,
   ],
   providers: [
     PrismaService,
